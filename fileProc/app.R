@@ -45,7 +45,7 @@ server <- function(input, output) {
     input
     , "file1"
     , root = roots
-    , filetypes = c("", "csv" )
+    , filetypes = c( "", "csv" )
   )
   fnamer <- reactive({
     req( input$file1 )
