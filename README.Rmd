@@ -33,7 +33,7 @@ This app does not present a button to open a dialog to select an input filename,
 
 The act of retrieving the value of the `dtar` reactive triggers the reactive code. That checks that `fnamer` is valid, and aborts if the user has not yet specified a filename using the `req` function. If the `fnamer` reactive is ready, then the file is read from the server side file system and a data frame is returned.
 
-The `fname_muckr` function automatically derives a filename to write the file into based on the name of the file from which data was read. This is process optimization that simpifies the app. It is also possible to specify the name of the output file as a `textInput` that doesn't get used until the input file name is changed, but this leads to files being written when you don't want them to be written. If you really want to setup this kind of gated workflow, then read about `observeEvent` (e.g. [Mastering Shiny](https://mastering-shiny.org/reactivity-objects.html#observers-details)), but keep in mind that such magic can easily turn your logic into spaghetti unless used sparingly.
+The `fname_muckr` function automatically derives a filename to write the file into based on the name of the file from which data was read. This is a process optimization that simplifies the app. It is also possible to specify the name of the output file as a `textInput` that doesn't get used until the input file name is changed, but this can to files being written when you don't want them to be written. If you really want to setup a gated workflow that doesn't write until you push a button, then read about `observeEvent` (e.g. [Mastering Shiny](https://mastering-shiny.org/reactivity-objects.html#observers-details)), but keep in mind that such magic can easily turn your logic into spaghetti unless used sparingly.
 
 The `shinyFileChoose` function in the server enables reactive behavior that hides an `observeEvent manager` with a file dialog. The value obtained when the user pushes the button is stored internally, and is retrieved using the `parseFilePaths` function.
 
@@ -47,6 +47,8 @@ grViz(
 node [shape=rect]
 file1 [label="input$file1"]
 outputfile1summary [label="output$file1summary"]
+outputfnamer_out [label="output$fnamer_out"]
+outputfname_muckr_out [label="output$fname_muckr_out"]
 node [shape=cylinder]
 testfile_csv [label="testfile.csv"]
 testfile_muck_csv [label="testfile_muck.csv"]
@@ -63,11 +65,13 @@ finfo -> fnamer
 testfile_csv -> read_csv [style=dotted]
 read_csv [label="read.csv"]
 fnamer -> read_csv
+fnamer -> outputfnamer_out
 read_csv -> dtar
 fnamer -> fname_muckr
 dtar -> muck
 muck -> write_muck
 fname_muckr -> write_muck
+fname_muckr -> outputfname_muckr_out
 write_muck -> testfile_muck_csv [style=dotted]
 write_muck -> outputfile1summary
 }

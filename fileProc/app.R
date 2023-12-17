@@ -29,12 +29,20 @@ write_muck <- function( dta, fpath ) {
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     # Application title
-    titlePanel("FileProcTest")
+    titlePanel( "FileProcTest" )
     , shinyFilesButton(
       "file1"
       , label = "File select"
       , title = "Please select a CSV file"
       , multiple = FALSE
+    )
+    , fluidRow(
+        column( 2, strong("Input filename:") )
+        , column( 10, textOutput( "fnamer_out" ) )
+    )
+    , fluidRow(
+      column( 2, strong("Output filename:") )
+      , column( 10, textOutput( "fname_muckr_out" ) )
     )
     , textOutput( "file1summary" )
 )
@@ -63,7 +71,14 @@ server <- function(input, output) {
   fname_muckr <- reactive({
     new_muck_name( fnamer() )
   })
-  
+  output$fnamer_out <- renderText({
+    req(fnamer)
+    fnamer()
+  })
+  output$fname_muckr_out <- renderText({
+    req(fname_muckr)
+    fname_muckr()
+  })
   output$file1summary <- renderText({
     sprintf( "lines read: %d", write_muck( muck( dtar() ), fname_muckr() ) )
   })

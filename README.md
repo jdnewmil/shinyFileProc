@@ -48,12 +48,12 @@ file system and a data frame is returned.
 
 The `fname_muckr` function automatically derives a filename to write the
 file into based on the name of the file from which data was read. This
-is process optimization that simpifies the app. It is also possible to
-specify the name of the output file as a `textInput` that doesn’t get
-used until the input file name is changed, but this leads to files being
+is a process optimization that simplifies the app. It is also possible
+to specify the name of the output file as a `textInput` that doesn’t get
+used until the input file name is changed, but this can to files being
 written when you don’t want them to be written. If you really want to
-setup this kind of gated workflow, then read about `observeEvent`
-(e.g. [Mastering
+setup a gated workflow that doesn’t write until you push a button, then
+read about `observeEvent` (e.g. [Mastering
 Shiny](https://mastering-shiny.org/reactivity-objects.html#observers-details)),
 but keep in mind that such magic can easily turn your logic into
 spaghetti unless used sparingly.
