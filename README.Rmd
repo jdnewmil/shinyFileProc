@@ -60,8 +60,8 @@ dtar
 fname_muckr
 node [shape=oval]
 file1 -> parseFilePaths
-parseFilePaths -> finfo [label="$datapath"]
-finfo -> fnamer
+parseFilePaths -> finfo
+finfo -> fnamer [label="$datapath"]
 testfile_csv -> read_csv [style=dotted]
 read_csv [label="read.csv"]
 fnamer -> read_csv
