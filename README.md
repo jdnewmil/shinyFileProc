@@ -50,7 +50,7 @@ The `fname_muckr` function automatically derives a filename to write the
 file into based on the name of the file from which data was read. This
 is a process optimization that simplifies the app. It is also possible
 to specify the name of the output file as a `textInput` that doesn’t get
-used until the input file name is changed, but this can to files being
+used until the input file name is changed, but this can lead to files being
 written when you don’t want them to be written. If you really want to
 setup a gated workflow that doesn’t write until you push a button, then
 read about `observeEvent` (e.g. [Mastering
